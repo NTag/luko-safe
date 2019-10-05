@@ -18,6 +18,7 @@ const AppNavigator = createStackNavigator(
     },
   },
   {
+    initialRouteName: 'AddItem',
     mode: 'modal',
   }
 );

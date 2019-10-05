@@ -1,13 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Themed } from 'react-navigation';
 import { StyleSheet, View } from 'react-native';
 import Button from '../components/Button';
 import Colors from '../constants/Colors';
+import Input from '../components/Input';
 
 const AddItemScreen = () => {
+  const [name, setName] = useState('');
+  const [description, setDescription] = useState('');
+  const [purchaseValue, setPurchaseValue] = useState('');
+
   return (
     <View style={styles.container}>
-      <Themed.Text style={styles.text}>Add item screen</Themed.Text>
+      <Input value={name} onChangeText={setName} label="Name" />
+      <Input value={purchaseValue} onChangeText={setPurchaseValue} label="Purchase value" keyboardType="numeric" suffix="€" />
+      <Input value={description} onChangeText={setDescription} label="Description (optional)" multiline />
     </View>
   );
 };
@@ -15,8 +22,7 @@ const AddItemScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    padding: 20,
   },
   text: {
     fontFamily: 'Avenir',
