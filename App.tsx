@@ -1,19 +1,25 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { createAppContainer } from 'react-navigation';
+import { createStackNavigator } from 'react-navigation-stack';
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-    </View>
-  );
-}
+import ItemsScreen from './screens/ItemsScreen';
+import AddItemScreen from './screens/AddItemScreen';
+import ItemScreen from './screens/ItemScreen';
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+const AppNavigator = createStackNavigator(
+  {
+    Items: {
+      screen: ItemsScreen,
+    },
+    Item: {
+      screen: ItemScreen,
+    },
+    AddItem: {
+      screen: AddItemScreen,
+    },
   },
-});
+  {
+    mode: 'modal',
+  }
+);
+
+export default createAppContainer(AppNavigator);
