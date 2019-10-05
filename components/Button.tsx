@@ -1,6 +1,6 @@
 import React from 'react';
-import { Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import { Text, TouchableOpacity, View } from 'react-native';
+import Icon from './Icon';
 import Colors from '../constants/Colors';
 
 type buttonProps = {
@@ -21,10 +21,10 @@ export default ({ title, icon, onPress, disabled = false, size, style, color = '
       <View style={style}>
         <View style={{ padding: 20, margin: -20 }}>
           {icon && (
-            <Ionicons name={`${Platform.OS}-${icon}`} color={contentColor} size={size} />
+            <Icon name={icon} color={contentColor} size={size} />
           )}
           {title && (
-            <Text style={{ color: contentColor, fontSize: size, fontFamily: 'Avenir' }}>{title}</Text>
+            <Text style={{ color: contentColor, fontSize: size, fontFamily: 'Avenir', fontWeight: 'bold' }}>{title}</Text>
           )}
         </View>
       </View>

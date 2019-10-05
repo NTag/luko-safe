@@ -10,6 +10,7 @@ export default (props) => {
       tintColor={Colors.primary}
       labelTextStyle={textStyle}
       titleTextStyle={textStyle}
+      baseColor={Colors.label}
       {...props}
     />
   );

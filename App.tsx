@@ -1,5 +1,9 @@
+import React from 'react';
+
 import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
+
+import { ActionSheetProvider } from '@expo/react-native-action-sheet'
 
 import ItemsScreen from './screens/ItemsScreen';
 import AddItemScreen from './screens/AddItemScreen';
@@ -23,4 +27,10 @@ const AppNavigator = createStackNavigator(
   }
 );
 
-export default createAppContainer(AppNavigator);
+const App = createAppContainer(AppNavigator);
+
+export default () => (
+  <ActionSheetProvider>
+    <App />
+  </ActionSheetProvider>
+);
