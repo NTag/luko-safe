@@ -17,7 +17,7 @@ export default ({ title, icon, onPress, disabled = false, size, style, color = '
   const contentColor = disabled ? Colors.disabled : Colors[color];
 
   return (
-    <TouchableOpacity onPress={disabled ? null : onPress}>
+    <TouchableOpacity onPress={disabled ? null : onPress} activeOpacity={disabled ? 1 : 0.2}>
       <View style={style}>
         <View style={{ padding: 20, margin: -20 }}>
           {icon && (
@@ -29,5 +29,5 @@ export default ({ title, icon, onPress, disabled = false, size, style, color = '
         </View>
       </View>
     </TouchableOpacity>
-  )
+  );
 };

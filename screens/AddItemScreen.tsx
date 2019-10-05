@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { KeyboardAvoidingView, ScrollView, StyleSheet, View } from 'react-native';
 import { useActionSheet } from '@expo/react-native-action-sheet';
 import Button from '../components/Button';
@@ -10,7 +10,11 @@ import ButtonBlock from '../components/ButtonBlock';
 import ImageBlock from '../components/ImageBlock';
 import pickPhoto from '../services/pickPhoto';
 
-const AddItemScreen = () => {
+const createItem = (data) => {
+  console.log(data);
+};
+
+const AddItemScreen = ({ navigation }) => {
   const { showActionSheetWithOptions } = useActionSheet();
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
@@ -18,6 +22,19 @@ const AddItemScreen = () => {
   const [purchaseDate, setPurchaseDate] = useState();
   const [category, setCategory] = useState();
   const [image, setImage] = useState();
+
+  const dataIsValid = name && purchaseValue && purchaseDate && category && image;
+  const onSave = () => {
+    createItem({ name, description, purchaseValue, purchaseDate, category, image });
+  };
+
+  useEffect(() => {
+    if (dataIsValid) {
+      navigation.setParams({ onSave });
+    } else {
+      navigation.setParams({ onSave: null });
+    }
+  }, [dataIsValid]);
 
   const onAddPhoto = async () => {
     const photo = await pickPhoto({ showActionSheetWithOptions });
@@ -51,28 +68,34 @@ const styles = StyleSheet.create({
   },
 });
 
-AddItemScreen.navigationOptions = ({ navigation }) => ({
-  title: 'New Object',
-  headerTitleStyle: {
-    fontFamily: 'Avenir',
-    fontWeight: 'bold',
-    color: Colors.dark,
-  },
-  headerLeft: (
-    <Button
-      icon="close"
-      onPress={() => navigation.goBack()}
-      size={28}
-      style={{ marginLeft: 20 }}
-      color="dark"
-    />
-  ),
-  headerRight: (
-    <Button
-      title="Save"
-      style={{ marginRight: 20 }}
-    />
-  ),
-});
+AddItemScreen.navigationOptions = ({ navigation }) => {
+  const onSave = navigation.getParam('onSave');
+
+  return {
+    title: 'New Object',
+    headerTitleStyle: {
+      fontFamily: 'Avenir',
+      fontWeight: 'bold',
+      color: Colors.dark,
+    },
+    headerLeft: (
+      <Button
+        icon="close"
+        onPress={() => navigation.goBack()}
+        size={28}
+        style={{ marginLeft: 20 }}
+        color="dark"
+      />
+    ),
+    headerRight: (
+      <Button
+        title="Save"
+        style={{ marginRight: 20 }}
+        disabled={!onSave}
+        onPress={onSave}
+      />
+    ),
+  };
+};
 
 export default AddItemScreen;
