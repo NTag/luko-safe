@@ -1,21 +1,28 @@
 import React, { useState } from 'react';
-import { Themed } from 'react-navigation';
 import { StyleSheet, View } from 'react-native';
-import DateTimePicker from 'react-native-modal-datetime-picker';
 import Button from '../components/Button';
 import Colors from '../constants/Colors';
 import Input from '../components/Input';
 import DatePicker from '../components/DatePicker';
+import Picker from '../components/Picker';
+
+const CATEGORIES = [
+  { label: 'Football', value: 'football' },
+  { label: 'Baseball', value: 'baseball' },
+  { label: 'Hockey', value: 'hockey' },
+];
 
 const AddItemScreen = () => {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [purchaseValue, setPurchaseValue] = useState('');
   const [purchaseDate, setPurchaseDate] = useState();
+  const [category, setCategory] = useState();
 
   return (
     <View style={styles.container}>
       <Input value={name} onChangeText={setName} label="Name" />
+      <Picker label="Category" value={category} onChange={setCategory} items={CATEGORIES} />
       <DatePicker label="Purchase date" value={purchaseDate} onChange={setPurchaseDate} maximumDate={new Date()} />
       <Input value={purchaseValue} onChangeText={setPurchaseValue} label="Purchase value" keyboardType="numeric" suffix="€" />
       <Input value={description} onChangeText={setDescription} label="Description (optional)" multiline />
