@@ -9,10 +9,7 @@ import CategoryPicker from '../components/CategoryPicker';
 import ButtonBlock from '../components/ButtonBlock';
 import ImageBlock from '../components/ImageBlock';
 import pickPhoto from '../services/pickPhoto';
-
-const createItem = (data) => {
-  console.log(data);
-};
+import { createItem } from '../services/api';
 
 const AddItemScreen = ({ navigation }) => {
   const { showActionSheetWithOptions } = useActionSheet();
@@ -24,8 +21,10 @@ const AddItemScreen = ({ navigation }) => {
   const [image, setImage] = useState();
 
   const dataIsValid = name && purchaseValue && purchaseDate && category && image;
-  const onSave = () => {
-    createItem({ name, description, purchaseValue, purchaseDate, category, image });
+  const onSave = async () => {
+    const data = { name, description, purchaseValue, purchaseDate, category, image };
+    await createItem(data);
+    navigation.goBack();
   };
 
   useEffect(() => {

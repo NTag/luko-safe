@@ -1,8 +1,9 @@
-import React from 'react';
-import { SafeAreaView, Themed } from 'react-navigation';
+import React, { useState, useEffect } from 'react';
+import { SafeAreaView, Themed, withNavigationFocus } from 'react-navigation';
 import { StatusBar, StyleSheet, View } from 'react-native';
 import Title from '../components/Title';
 import Button from '../components/Button';
+import { getItems } from '../services/api';
 
 const headerStyles = StyleSheet.create({
   container: {
@@ -29,12 +30,19 @@ const Header = ({ onAdd }) => {
   )
 };
 
-const ItemsScreen = ({ navigation }) => {
+const ItemsScreen = ({ navigation, isFocused }) => {
+  const [items, setItems] = useState([]);
+
+  useEffect(() => {
+    getItems().then(setItems);
+  }, [isFocused]);
+
+
   return (
     <View style={styles.container}>
       <StatusBar barStyle="dark-content" />
       <Header onAdd={() => navigation.navigate('AddItem') } />
-      <Themed.Text style={styles.text}>List of items</Themed.Text>
+      <Themed.Text style={styles.text}>Number of items: {items.length}</Themed.Text>
     </View>
   );
 };
@@ -53,4 +61,4 @@ ItemsScreen.navigationOptions = {
   header: null,
 };
 
-export default ItemsScreen;
+export default withNavigationFocus(ItemsScreen);

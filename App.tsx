@@ -22,7 +22,7 @@ const AppNavigator = createStackNavigator(
     },
   },
   {
-    initialRouteName: 'AddItem',
+    initialRouteName: 'Items',
     mode: 'modal',
   }
 );

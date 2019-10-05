@@ -12,7 +12,6 @@ const styles = StyleSheet.create({
 });
 
 export default ({ uri, onPress, style } : { uri: string, onPress?: () => void, style?: object }) => {
-  console.log(uri);
   return (
     <TouchableOpacity onPress={onPress}>
       <Image source={{ uri }} style={[styles.image, style]} />
