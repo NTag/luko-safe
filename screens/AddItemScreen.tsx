@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { KeyboardAvoidingView, ScrollView, StyleSheet, View } from 'react-native';
 import Button from '../components/Button';
 import Colors from '../constants/Colors';
 import Input from '../components/Input';
@@ -15,19 +15,20 @@ const AddItemScreen = () => {
   const [category, setCategory] = useState();
 
   return (
-    <View style={styles.container}>
-      <Input value={name} onChangeText={setName} label="Name" />
-      <CategoryPicker label="Category" value={category} onChange={setCategory} />
-      <DatePicker label="Purchase date" value={purchaseDate} onChange={setPurchaseDate} maximumDate={new Date()} />
-      <Input value={purchaseValue} onChangeText={setPurchaseValue} label="Purchase value" keyboardType="numeric" suffix="€" />
-      <Input value={description} onChangeText={setDescription} label="Description (optional)" multiline />
-    </View>
+    <KeyboardAvoidingView style={{ flex: 1 }} behavior="height" keyboardVerticalOffset={90}>
+      <ScrollView contentContainerStyle={styles.container}>
+        <Input value={name} onChangeText={setName} label="Name" />
+        <CategoryPicker label="Category" value={category} onChange={setCategory} />
+        <DatePicker label="Purchase date" value={purchaseDate} onChange={setPurchaseDate} maximumDate={new Date()} />
+        <Input value={purchaseValue} onChangeText={setPurchaseValue} label="Purchase value" keyboardType="numeric" suffix="€" />
+        <Input value={description} onChangeText={setDescription} label="Description (optional)" multiline />
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     padding: 20,
   },
   text: {
