@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
 
 export default ({ uri, onPress, style } : { uri: string, onPress?: () => void, style?: object }) => {
   return (
-    <TouchableOpacity onPress={onPress}>
+    <TouchableOpacity onPress={onPress} activeOpacity={onPress ? 0.2 : 1}>
       <Image source={{ uri }} style={[styles.image, style]} />
     </TouchableOpacity>
   );

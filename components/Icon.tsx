@@ -4,6 +4,6 @@ import { Ionicons } from '@expo/vector-icons';
 
 export default ({ name, ...props }) => {
   return (
-    <Ionicons name={`${Platform.OS}-${name}`} {...props} />
+    <Ionicons name={`${Platform.OS === 'ios' ? 'ios' : 'md'}-${name}`} {...props} />
   );
 };
