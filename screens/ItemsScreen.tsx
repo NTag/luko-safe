@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { SafeAreaView, withNavigationFocus } from 'react-navigation';
-import { ScrollView, StatusBar, StyleSheet, Text, View } from 'react-native';
+import { RefreshControl, ScrollView, StatusBar, StyleSheet, Text, View } from 'react-native';
 import Title from '../components/Title';
 import Button from '../components/Button';
 import { getItems } from '../services/api';
@@ -37,11 +37,18 @@ const Header = ({ onAdd }) => {
 
 const ItemsScreen = ({ navigation, isFocused }) => {
   const [items, setItems] = useState([]);
+  const [loading, setLoading] = useState(false);
   const newItem = navigation.getParam('newItem');
+
+  const loadData = async () => {
+    setLoading(true);
+    await getItems().then(setItems);
+    setLoading(false);
+  };
 
   useEffect(() => {
     if (isFocused) {
-      getItems().then(setItems);
+      loadData();
     }
   }, [isFocused]);
 
@@ -62,7 +69,10 @@ const ItemsScreen = ({ navigation, isFocused }) => {
           </Text>
         </MessageModal>
       )}
-      <ScrollView contentContainerStyle={styles.items}>
+      <ScrollView
+        contentContainerStyle={styles.items}
+        refreshControl={<RefreshControl refreshing={loading} onRefresh={loadData} />}
+      >
         {items.map((item, i) => {
           return (
             <Card
