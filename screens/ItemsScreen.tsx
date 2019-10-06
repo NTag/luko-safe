@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { SafeAreaView, withNavigationFocus } from 'react-navigation';
-import { ScrollView, StatusBar, StyleSheet, View } from 'react-native';
+import { ScrollView, StatusBar, StyleSheet, Text, View } from 'react-native';
 import Title from '../components/Title';
 import Button from '../components/Button';
 import { getItems } from '../services/api';
 import { navigateItemScreen } from '../services/navigation';
 import Card from '../components/Card';
+import MessageModal from '../components/MessageModal';
+import Colors from '../constants/Colors';
 
 const headerStyles = StyleSheet.create({
   container: {
@@ -34,6 +36,7 @@ const Header = ({ onAdd }) => {
 
 const ItemsScreen = ({ navigation, isFocused }) => {
   const [items, setItems] = useState([]);
+  const newItem = navigation.getParam('newItem');
 
   useEffect(() => {
     if (isFocused) {
@@ -44,7 +47,20 @@ const ItemsScreen = ({ navigation, isFocused }) => {
   return (
     <View style={styles.container}>
       <StatusBar barStyle="dark-content" />
-      <Header onAdd={() => navigation.navigate('AddItem') } />
+      <Header onAdd={() => navigation.navigate('AddItem', { returnToRoute: navigation.state }) } />
+      {newItem && (
+        <MessageModal
+          title="Object successfully added"
+          icon="checkmark-circle-outline"
+          buttonLabel="Great!"
+          onDismiss={() => navigation.setParams({ newItem: null })}
+        >
+          <Text style={[styles.text, { color: Colors.label }]}>
+            The estimated value of your {newItem.name} is <Text style={{ fontWeight: 'bold' }}>{newItem.estimatedValue[0]} €</Text>.
+            If something ever happens to it, it will be covered and refunded.
+          </Text>
+        </MessageModal>
+      )}
       <ScrollView contentContainerStyle={styles.items}>
         {items.map((item, i) => {
           return (

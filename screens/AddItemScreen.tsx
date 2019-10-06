@@ -24,8 +24,9 @@ const AddItemScreen = ({ navigation }) => {
 
   onSave.current = async () => {
     const data = { name, description, purchaseValue, purchaseDate, category, image };
-    await createItem(data);
-    navigation.goBack();
+    const newItem = await createItem(data);
+    const { routeName, key } = navigation.getParam('returnToRoute');
+    navigation.navigate({ routeName, key, params: { newItem } });
   };
 
   const dataIsValid = name && purchaseValue && purchaseDate && category && image;
