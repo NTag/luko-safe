@@ -10,7 +10,7 @@ import ButtonBlock from '../components/ButtonBlock';
 import ImageBlock from '../components/ImageBlock';
 import pickPhoto from '../services/pickPhoto';
 import { createItem } from '../services/api';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 const AddItemScreen = ({ navigation }) => {
   const { showActionSheetWithOptions } = useActionSheet();

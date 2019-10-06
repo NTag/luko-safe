@@ -5,6 +5,7 @@ import Title from '../components/Title';
 import Colors from '../constants/Colors';
 import moment from 'moment';
 import ImageBlock from '../components/ImageBlock';
+import { formatPrice } from '../services/numbers';
 
 const infoStyle = StyleSheet.create({
   container: {
@@ -123,8 +124,8 @@ const ItemScreen = ({ navigation }) => {
           ) : null}
         </InfosBlock>
         <InfosBlock title="Price">
-          <InfoRow label="Estimation" value={`${Math.round(item.estimatedValue[0])} € — ${Math.round(item.estimatedValue[1])} €`} />
-          <InfoRow label="Purchase price" value={`${item.purchaseValue} €`} />
+          <InfoRow label="Estimation" value={`${formatPrice(item.estimatedValue[0])} — ${formatPrice(item.estimatedValue[1])}`} />
+          <InfoRow label="Purchase price" value={formatPrice(item.purchaseValue)} />
         </InfosBlock>
         <InfosBlock title="Documents" borderBottom={false}>
           <View style={styles.documents}>

@@ -8,6 +8,7 @@ import { navigateItemScreen } from '../services/navigation';
 import Card from '../components/Card';
 import MessageModal from '../components/MessageModal';
 import Colors from '../constants/Colors';
+import { formatPrice } from '../services/numbers';
 
 const headerStyles = StyleSheet.create({
   container: {
@@ -56,7 +57,7 @@ const ItemsScreen = ({ navigation, isFocused }) => {
           onDismiss={() => navigation.setParams({ newItem: null })}
         >
           <Text style={[styles.text, { color: Colors.label }]}>
-            The estimated value of your {newItem.name} is <Text style={{ fontWeight: 'bold' }}>{newItem.estimatedValue[0]} €</Text>.
+            The estimated value of your {newItem.name} is <Text style={{ fontWeight: 'bold' }}>{formatPrice(newItem.estimatedValue[0])}</Text>.
             If something ever happens to it, it will be covered and refunded.
           </Text>
         </MessageModal>
@@ -68,7 +69,7 @@ const ItemsScreen = ({ navigation, isFocused }) => {
               key={item.id}
               image={item.thumbnail}
               title={item.name}
-              description={`${item.purchaseValue} €`}
+              description={formatPrice(item.purchaseValue)}
               onPress={() => navigateItemScreen({ navigation, id: item.id })}
             />
           );
