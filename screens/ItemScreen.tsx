@@ -4,6 +4,7 @@ import Button from '../components/Button';
 import Title from '../components/Title';
 import Colors from '../constants/Colors';
 import moment from 'moment';
+import ImageBlock from '../components/ImageBlock';
 
 const infoStyle = StyleSheet.create({
   container: {
@@ -85,6 +86,14 @@ const styles = StyleSheet.create({
     fontSize: 14,
     textTransform: 'uppercase',
   },
+  documents: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+  },
+  document: {
+    marginTop: 20,
+    marginRight: 20,
+  },
 });
 
 const ItemScreen = ({ navigation }) => {
@@ -117,7 +126,14 @@ const ItemScreen = ({ navigation }) => {
           <InfoRow label="Estimation" value={`${Math.round(item.estimatedValue[0])} € — ${Math.round(item.estimatedValue[1])} €`} />
           <InfoRow label="Purchase price" value={`${item.purchaseValue} €`} />
         </InfosBlock>
-        <InfosBlock title="Documents" borderBottom={false} />
+        <InfosBlock title="Documents" borderBottom={false}>
+          <View style={styles.documents}>
+            <ImageBlock uri={'data:image/jpeg;base64,' + item.receipt} style={styles.document} />
+            {item.photos.map((photo, i) => (
+              <ImageBlock key={i} uri={'data:image/jpeg;base64,' + photo} style={styles.document} />
+            ))}
+          </View>
+        </InfosBlock>
       </View>
     </ScrollView>
   );
