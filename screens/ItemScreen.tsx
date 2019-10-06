@@ -1,28 +1,44 @@
 import React from 'react';
 import { Themed } from 'react-navigation';
-import { StyleSheet, View } from 'react-native';
+import { Dimensions, Image, StyleSheet, View } from 'react-native';
+import Button from '../components/Button';
 
-const ItemScreen = () => {
-  return (
-    <View style={styles.container}>
-      <Themed.Text style={styles.text}>Precise item screen</Themed.Text>
-    </View>
-  );
-};
+const screenWidth = Dimensions.get('screen').width;
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
   },
   text: {
     fontFamily: 'Avenir',
   },
+  image: {
+    width: screenWidth,
+    height: screenWidth,
+    resizeMode: 'cover',
+  },
+  closeButton: {
+    position: 'absolute',
+    top: 30,
+    left: 20,
+  },
 });
 
+const ItemScreen = ({ navigation }) => {
+  const item = navigation.getParam('item');
+
+  return (
+    <View style={styles.container}>
+      <Image source={{ uri: 'data:image/jpeg;base64,' + item.image }} style={styles.image} />
+      <View style={styles.closeButton}>
+        <Button icon="close-circle" onPress={() => navigation.goBack()} size={28} color="dark" style={{ opacity: 0.2 }} />
+      </View>
+    </View>
+  );
+};
+
 ItemScreen.navigationOptions = {
-  headerTitle: null,
+  header: null,
 };
 
 export default ItemScreen;

@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { SafeAreaView, withNavigationFocus } from 'react-navigation';
-import { Image, ScrollView, StatusBar, StyleSheet, View } from 'react-native';
+import { ScrollView, StatusBar, StyleSheet, View } from 'react-native';
 import Title from '../components/Title';
 import Button from '../components/Button';
 import { getItems } from '../services/api';
-import Colors from '../constants/Colors';
+import { navigateItemScreen } from '../services/navigation';
 import Card from '../components/Card';
 
 const headerStyles = StyleSheet.create({
@@ -36,9 +36,10 @@ const ItemsScreen = ({ navigation, isFocused }) => {
   const [items, setItems] = useState([]);
 
   useEffect(() => {
-    getItems().then(setItems);
+    if (isFocused) {
+      getItems().then(setItems);
+    }
   }, [isFocused]);
-
 
   return (
     <View style={styles.container}>
@@ -47,7 +48,13 @@ const ItemsScreen = ({ navigation, isFocused }) => {
       <ScrollView contentContainerStyle={styles.items}>
         {items.map((item, i) => {
           return (
-            <Card key={i} image={item.thumbnail} title={item.name} description={`${item.purchaseValue} €`} />
+            <Card
+              key={item.id}
+              image={item.thumbnail}
+              title={item.name}
+              description={`${item.purchaseValue} €`}
+              onPress={() => navigateItemScreen({ navigation, id: item.id })}
+            />
           );
         })}
         <View style={{ width: 150, height: 260 }} />

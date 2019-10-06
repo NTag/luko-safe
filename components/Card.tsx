@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, StyleSheet, Text, View } from 'react-native';
+import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
 import Title from './Title';
 import Colors from '../constants/Colors';
 
@@ -43,16 +43,18 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ({ image, title, description } : { image: string, title: string, description: string }) => {
+export default ({ image, title, description, onPress } : { image: string, title: string, description: string, onPress?: () => void }) => {
   return (
-    <View style={styles.container}>
-      <View style={styles.imageContainer}>
-        <Image source={{ uri: 'data:image/jpeg;base64,' + image }} style={styles.image} />
+    <TouchableOpacity onPress={onPress}>
+      <View style={styles.container}>
+        <View style={styles.imageContainer}>
+          <Image source={{ uri: 'data:image/jpeg;base64,' + image }} style={styles.image} />
+        </View>
+        <View style={styles.titleContainer}>
+          <Title size="h2" style={{ fontWeight: '500' }}>{title}</Title>
+        </View>
+        <Title size="h3" style={styles.label}>{description}</Title>
       </View>
-      <View style={styles.titleContainer}>
-        <Title size="h2" style={{ fontWeight: '500' }}>{title}</Title>
-      </View>
-      <Title size="h3" style={styles.label}>{description}</Title>
-    </View>
+    </TouchableOpacity>
   );
 };

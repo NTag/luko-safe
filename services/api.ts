@@ -28,3 +28,6 @@ export const createItem = (data) => {
 export const getItems = () => {
   return queryApi({ path: '/items' });
 };
+export const getItem = (itemId: string) => {
+  return queryApi({ path: `/items/${itemId}` });
+};
