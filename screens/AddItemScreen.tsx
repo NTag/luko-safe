@@ -10,6 +10,7 @@ import ButtonBlock from '../components/ButtonBlock';
 import ImageBlock from '../components/ImageBlock';
 import pickPhoto from '../services/pickPhoto';
 import { createItem } from '../services/api';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 const AddItemScreen = ({ navigation }) => {
   const { showActionSheetWithOptions } = useActionSheet();
@@ -43,7 +44,7 @@ const AddItemScreen = ({ navigation }) => {
   };
 
   return (
-    <KeyboardAvoidingView style={{ flex: 1 }} behavior="height" keyboardVerticalOffset={90}>
+    <KeyboardAwareScrollView style={{ flex: 1 }}>
       <ScrollView contentContainerStyle={styles.container}>
         {
           image ?
@@ -56,7 +57,7 @@ const AddItemScreen = ({ navigation }) => {
         <Input value={purchaseValue} onChangeText={setPurchaseValue} label="Purchase value" keyboardType="numeric" suffix="€" />
         <Input value={description} onChangeText={setDescription} label="Description (optional)" multiline />
       </ScrollView>
-    </KeyboardAvoidingView>
+    </KeyboardAwareScrollView>
   );
 };
 
