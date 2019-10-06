@@ -23,7 +23,6 @@ export const getCategories = () => {
   return queryApi({ path: '/categories' });
 };
 export const createItem = (data) => {
-  console.log('createitem — name:', data.name);
   return queryApi({ method: 'POST', path: '/items', body: data });
 };
 export const getItems = () => {

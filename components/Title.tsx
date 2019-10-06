@@ -5,8 +5,8 @@ import Colors from '../constants/Colors';
 
 const sizes = {
   h1: 34,
-  h2: 26,
-  h3: 20,
+  h2: 22,
+  h3: 19,
 };
 
 const styles = StyleSheet.create({

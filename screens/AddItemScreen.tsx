@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { KeyboardAvoidingView, ScrollView, StyleSheet, View } from 'react-native';
 import { useActionSheet } from '@expo/react-native-action-sheet';
 import Button from '../components/Button';
@@ -19,13 +19,15 @@ const AddItemScreen = ({ navigation }) => {
   const [purchaseDate, setPurchaseDate] = useState();
   const [category, setCategory] = useState();
   const [image, setImage] = useState();
+  const onSave = useRef(() => {});
 
-  const dataIsValid = name && purchaseValue && purchaseDate && category && image;
-  const onSave = async () => {
+  onSave.current = async () => {
     const data = { name, description, purchaseValue, purchaseDate, category, image };
     await createItem(data);
     navigation.goBack();
   };
+
+  const dataIsValid = name && purchaseValue && purchaseDate && category && image;
 
   useEffect(() => {
     if (dataIsValid) {
@@ -37,7 +39,7 @@ const AddItemScreen = ({ navigation }) => {
 
   const onAddPhoto = async () => {
     const photo = await pickPhoto({ showActionSheetWithOptions });
-    setImage('data:image/jpeg;base64,' + photo.base64);
+    setImage(photo.base64);
   };
 
   return (
@@ -45,7 +47,7 @@ const AddItemScreen = ({ navigation }) => {
       <ScrollView contentContainerStyle={styles.container}>
         {
           image ?
-            (<ImageBlock uri={image} style={{ alignSelf: 'center' }} onPress={onAddPhoto} />) :
+            (<ImageBlock uri={'data:image/jpeg;base64,' + image} style={{ alignSelf: 'center' }} onPress={onAddPhoto} />) :
             (<ButtonBlock label="Add photo" icon="camera" style={{ alignSelf: 'center' }} onPress={onAddPhoto} />)
           }
         <Input value={name} onChangeText={setName} label="Name" />
@@ -91,7 +93,7 @@ AddItemScreen.navigationOptions = ({ navigation }) => {
         title="Save"
         style={{ marginRight: 20 }}
         disabled={!onSave}
-        onPress={onSave}
+        onPress={() => onSave.current()}
       />
     ),
   };
