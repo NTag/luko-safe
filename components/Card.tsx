@@ -51,7 +51,7 @@ export default ({ image, title, description, onPress } : { image: string, title:
           <Image source={{ uri: 'data:image/jpeg;base64,' + image }} style={styles.image} />
         </View>
         <View style={styles.titleContainer}>
-          <Title size="h2" style={{ fontWeight: '500' }}>{title}</Title>
+          <Title size="h2" style={{ fontWeight: '500' }} numberOfLines={1}>{title}</Title>
         </View>
         <Title size="h3" style={styles.label}>{description}</Title>
       </View>
