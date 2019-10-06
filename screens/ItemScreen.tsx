@@ -23,11 +23,11 @@ const infoStyle = StyleSheet.create({
   },
 });
 
-const InfoRow = ({ label, value }) => {
+const InfoRow = ({ label, value } : { label: string, value?: string }) => {
   return (
     <View style={infoStyle.container}>
       <Text style={[infoStyle.text, infoStyle.label]}>{label}</Text>
-      <Text style={infoStyle.text}>{value}</Text>
+      {value ? (<Text style={infoStyle.text}>{value}</Text>) : null}
     </View>
   );
 };
@@ -63,6 +63,7 @@ const screenWidth = Dimensions.get('screen').width;
 const styles = StyleSheet.create({
   text: {
     fontFamily: 'Avenir',
+    color: Colors.dark,
   },
   image: {
     width: screenWidth,
@@ -105,6 +106,12 @@ const ItemScreen = ({ navigation }) => {
           <InfoRow label="Category" value={item.category.label} />
           <InfoRow label="Purchase date" value={purchaseDate} />
           <InfoRow label="End of warranty" value={endWarrantyDate} />
+          {item.description ? (
+            <>
+              <InfoRow label="Description" />
+              <Text style={styles.text}>{item.description}</Text>
+            </>
+          ) : null}
         </InfosBlock>
         <InfosBlock title="Price">
           <InfoRow label="Estimation" value={`${Math.round(item.estimatedValue[0])} € — ${Math.round(item.estimatedValue[1])} €`} />
